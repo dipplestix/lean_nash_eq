@@ -51,27 +51,27 @@ def pris_dil : Player → Action → Action → ℕ
 
 
 -- Show that it is bounded
-lemma pris_dil_bounded : ∀a : Player, ∀ b c : Action, ∃ u, pris_dil a b c ≤ u :=
+lemma pris_dil_bounded : ∃ u : ℕ,  ∀ b c : Action, ∀a : Player, pris_dil a b c ≤ u :=
 begin
-  intros a b c,
   apply exists.intro 5,
+  intros a b c,
   induction' a,
   induction' b,
   induction' c,
   rw pris_dil,
   linarith,
   rw pris_dil,
+  linarith,
   induction' c,
+  rw pris_dil,
+  rw pris_dil,
+  induction' c,
+  induction' b,
   rw pris_dil,
   linarith,
   rw pris_dil,
   linarith,
   induction' b,
-  induction' c,
-  rw pris_dil,
-  linarith,
-  rw pris_dil,
-  induction' c,
   rw pris_dil,
   linarith,
   rw pris_dil,
@@ -133,29 +133,43 @@ is also equally good)
 Then it has a fixed point
 -/
 lemma kakutani_fixed_point (f : (Player → Action → Action → ℕ) → Player → Action → Action) 
-(u : Player → Action → Action → ℕ ) (a b : Player): 
+(u : Player → Action → Action → ℕ ) (a b : Player)(c : Action): 
 -- f bound (pris_dil_bounded) → f (x) is nonempty (best_response_exists)
 -- → range f convex (not true for this case, but will be for the mixed strategy case)
-  ∃ l m : Action, f u a m = l  ∧ f u b l = m :=
+  (∃ v : ℕ, ∀ x y : Action, ∀ p : Player,  u p x y ≤ v) →  
+  (∃ m : Action, ∀ o : Action, u a c m ≥ u a c o) → 
+  (∃ l m : Action, f u a m = l  ∧ f u b l = m) :=
 begin
   sorry,
 end
 
 
 --Proof that NE exists
-lemma NE_exists (a b : Player) : 
+lemma NE_exists (a b : Player) (x y : Action): 
 ∃ l m : Action, best_action pris_dil Player.A m = l ∧ best_action pris_dil Player.B l = m :=
 begin
   apply kakutani_fixed_point,
+  apply pris_dil_bounded,
+  apply best_response_exists,
+  apply pris_dil,
+  exact x,
 end
 
 /-!
 To-dos:
 1) List the conditions for K fixed points and use the pris_dil_bounded and best_response_exists lemmas
 inside the NE lemma
+-- Done in line 152-155
+
 2) Start working on the same things, but for mixed strategies
+I'm going to move this to a second file to not mess things up here
   - Create a simplex class
   - Switch from Action to Strategy (action is just strategy where ps are 1 or 0)
   - Do the same for a game that requires mixed strategy
   - Probbaly won't finish this part, but think I can make some good progress on it
+
+  -- Other directions
+    - Try to prove pieces of fixed point theorem
+    - Big proof
 -/
+
