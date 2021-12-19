@@ -140,6 +140,9 @@ lemma kakutani_fixed_point (f : (Player → Action → Action → ℕ) → Playe
   (∃ m : Action, ∀ o : Action, u a c m ≥ u a c o) → 
   (∃ l m : Action, f u a m = l  ∧ f u b l = m) :=
 begin
+  intro h1,
+  intro h2,
+  apply exists.intro c,
   sorry,
 end
 
@@ -164,12 +167,15 @@ inside the NE lemma
 2) Start working on the same things, but for mixed strategies
 I'm going to move this to a second file to not mess things up here
   - Create a simplex class
+    -- didn't work out very well
   - Switch from Action to Strategy (action is just strategy where ps are 1 or 0)
+    -- See nash_mixed.lean for the start of this
   - Do the same for a game that requires mixed strategy
+    -- no particulat game was defined
   - Probbaly won't finish this part, but think I can make some good progress on it
 
   -- Other directions
     - Try to prove pieces of fixed point theorem
-    - Big proof
+      -- Didn't have time
 -/
 
