@@ -1,4 +1,4 @@
-If it's easier, this project lives on github ar: https://github.com/dipplestix/lean_nash_eq
+If it's easier, this project lives on github at: https://github.com/dipplestix/lean_nash_eq
 
 To-dos:
 1) List the conditions for K fixed points and use the pris_dil_bounded and best_response_exists lemmas
